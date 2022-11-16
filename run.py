@@ -1,6 +1,6 @@
 import gspread
 from google.oauth2.service_account import Credentials
-
+from pprint import pprint
 
 #Every Google account has an IAM configuration
 #IAM =Identity and Access Management. This configuration specifies what the iser has access to
@@ -71,9 +71,29 @@ def update_sales_worksheet(data):
     sales_worksheet.append_row(data)
     print("Sales worksheet updated successfully\n")
 
+def calculate_surplus_data(sales_row):
+    """
+    Compare sales with stock and calculate the surplus for each item type.
+    The surplus is defined as the sales figure subtracted from the stock:
+    - Positive surplus indicates waste
+    - Negative surplus indicates extra made when stock was sold out.
+    """
 
+    print("Calculating surplus data...\n")
+    # using the worksheet method of the sheet  variable again, we’ll let the sheet know that  
+    # we want the data from the “stock” worksheet 
+    stock = SHEET.worksheet("stock").get_all_values()#gspread library called get_all_values() to  fetch all of the cells from our stock worksheet.
+    stock_row = stock[-1]#The simplest way is to use a slice.In this case stock with square brackets giving it the list index of -1. This will slice the final item from the list and return it to the new stock variable
+    print(stock_row)
 
-data = get_sales_data()
-sales_data = [int(num) for num in data]
-update_sales_worksheet(sales_data)
+def main():
+    """
+    Run all program functions
+    """
+    data = get_sales_data()
+    sales_data = [int(num) for num in data]
+    update_sales_worksheet(sales_data)
+    calculate_surplus_data(sales_data)
+print("Welcome to love sandwiches Data Automation")
+main()
 
