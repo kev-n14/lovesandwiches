@@ -84,7 +84,14 @@ def calculate_surplus_data(sales_row):
     # we want the data from the “stock” worksheet 
     stock = SHEET.worksheet("stock").get_all_values()#gspread library called get_all_values() to  fetch all of the cells from our stock worksheet.
     stock_row = stock[-1]#The simplest way is to use a slice.In this case stock with square brackets giving it the list index of -1. This will slice the final item from the list and return it to the new stock variable
-    print(stock_row)
+
+    surplus_data =[]
+    
+    for stock,sales in zip(stock_row, sales_row):
+        surplus = int(stock) - sales
+        surplus_data.append(surplus)
+    print(surplus_data)  
+
 
 def main():
     """
