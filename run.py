@@ -1,6 +1,6 @@
 import gspread
 from google.oauth2.service_account import Credentials
-from pprint import pprint
+
 
 #Every Google account has an IAM configuration
 #IAM =Identity and Access Management. This configuration specifies what the iser has access to
@@ -32,7 +32,7 @@ def get_sales_data():
         print("Data should be six numbers, separted by commas.")
         print("Example: 10,20,30,40,50,60\n")
 
-        data_str = input("Enter your data here: ")
+        data_str = input("Enter your data here:\n")
         #this will get rid of the ","the user entered between values
         sales_data = data_str.split(",")# returns the broken up values as a list e.g['10','11','21']
         validate_data(sales_data)
