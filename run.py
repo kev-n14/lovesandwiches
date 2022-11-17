@@ -92,7 +92,7 @@ def calculate_surplus_data(sales_row):
     for stock,sales in zip(stock_row, sales_row):
         surplus = int(stock) - sales
         surplus_data.append(surplus)
-    print(surplus_data)  
+    
 
     return surplus_data
 
@@ -110,6 +110,20 @@ def get_last_5_entries_sales():
         columns.append(column[-5:])# slicing colon because we want to slice multiply values from the list 
 
     return columns
+def calculate_stock_data(data):
+    """
+    Calculate the average stock for each item type,adding 10%
+    """
+    print("Calculating stock data...\n")
+    new_stock_data = []
+    for column in data:
+        int_column = [int(num) for num in column]
+        average = sum(int_column) / len(int_column)
+        stock_num = average*1.1 # this add 10% too the average
+        new_stock_data.append(round(stock_num))
+
+    return new_stock_data
+
 def main():
     """
     Run all program functions
@@ -119,7 +133,10 @@ def main():
     update_worksheet(sales_data, "sales")
     new_surplus_data = calculate_surplus_data(sales_data)
     update_worksheet(new_surplus_data,"surplus")
+    sales_columns = get_last_5_entries_sales()  
+    stock_data = calculate_stock_data(sales_columns)
+    update_worksheet(stock_data, "stock")
 
 print("Welcome to love sandwiches Data Automation")
+
 main()
-sales_columns = get_last_5_entries_sales()  
